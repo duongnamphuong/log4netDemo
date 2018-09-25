@@ -1,5 +1,8 @@
-https://www.c-sharpcorner.com/article/configure-log4net-with-database-tutorial-for-beginners/
-https://stackify.com/log4net-guide-dotnet-logging/
+This tutorial shows how to use log4net to log to console, file and database. In this case we use UTC timezone for the timing of each log, SQL Server database for database.
+
+References:
+	https://www.c-sharpcorner.com/article/configure-log4net-with-database-tutorial-for-beginners/
+	https://stackify.com/log4net-guide-dotnet-logging/
 
 Steps:
 - Create a solution with a console project, using .NET Framework 4.5.2
@@ -85,7 +88,7 @@ Steps:
 	<connectionStrings>
 		<add name="ConnectionString1" connectionString="Data Source=NINETAILS\SQLEXPRESS; Persist Security Info=True; Initial Catalog=log4netdblogger;Integrated Security=True" providerName="System.Data.SqlClient" />
 	</connectionStrings>
-- Create this table log4netdblogger database in SQL Server:
+- Create log4netdblogger database in SQL Server with this table:
 	CREATE TABLE [dbo].[Log4NetLog](
 		[Id] [int] IDENTITY(1,1) NOT NULL,
 		[Date] [datetime] NOT NULL,
