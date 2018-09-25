@@ -1,0 +1,1 @@
+https://www.c-sharpcorner.com/article/configure-log4net-with-database-tutorial-for-beginners/
