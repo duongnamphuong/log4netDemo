@@ -12,6 +12,15 @@ namespace log4netdblogger
         static void Main(string[] args)
         {
             log.Info("1");
+            int divisor = 0, i = 1;
+            try
+            {
+                var result = i / divisor;
+            }
+            catch (Exception e)
+            {
+                log.Error("Divided by 0.", e);
+            }
         }
     }
 }
