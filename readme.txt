@@ -7,7 +7,7 @@ References:
 Steps:
 - Create a solution with a console project, using .NET Framework 4.5.2
 - Using Package Manager Console, run: install-package log4net -version 2.0.8
-- Add a new config file: log4net.config
+- Add a new config file: log4net.config. Open its properties and set "Copy to Output Directory" to "Copy always". Paste this content into the file (overwrite all previous content):
 	<log4net>
 	  <root>
 	    <level value="ALL" />
@@ -83,12 +83,15 @@ Steps:
 	    </parameter>
 	  </appender>
 	</log4net>
-- Open AssemblyInfo.cs, then insert this at the last line: [assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.config")]
-- In App.config, add this in <configuration>:
+- Open AssemblyInfo.cs, then insert this at the last line:
+	[assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.config")]
+- In App.config, add this inside <configuration>:
 	<connectionStrings>
 		<add name="ConnectionString1" connectionString="Data Source=NINETAILS\SQLEXPRESS; Persist Security Info=True; Initial Catalog=log4netdblogger;Integrated Security=True" providerName="System.Data.SqlClient" />
 	</connectionStrings>
-- Create log4netdblogger database in SQL Server with this table:
+	(*) Change Data Source to match the SQL Server connection on your machine.
+	(*) This connection string uses Windows authentication to access SQL Server. If you want to use SQL Server authentication, replace "Integrated Security=True" with "user id=your_username;password=your_password"
+- Create log4netdblogger database in SQL Server, then add this table:
 	CREATE TABLE [dbo].[Log4NetLog](
 		[Id] [int] IDENTITY(1,1) NOT NULL,
 		[Date] [datetime] NOT NULL,
