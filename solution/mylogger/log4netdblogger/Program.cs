@@ -8,10 +8,9 @@ namespace log4netdblogger
 {
     class Program
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         static void Main(string[] args)
         {
-            log.Info("1");
+            LogUtil.Log4netLogger.Info("1");
             int divisor = 0, i = 1;
             try
             {
@@ -19,7 +18,7 @@ namespace log4netdblogger
             }
             catch (Exception e)
             {
-                log.Error("Divided by 0.", e);
+                LogUtil.Log4netLogger.Error("Divided by 0.", e);
             }
         }
     }
