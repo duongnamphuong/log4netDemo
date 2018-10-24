@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@ namespace log4netdblogger
     {
         static void Main(string[] args)
         {
-            LogUtil.Log4netLogger.Info("1");
+            LogUtil.Log4netLogger.Info(MethodBase.GetCurrentMethod().DeclaringType, "1");
             int divisor = 0, i = 1;
             try
             {
@@ -18,7 +19,7 @@ namespace log4netdblogger
             }
             catch (Exception e)
             {
-                LogUtil.Log4netLogger.Error("Divided by 0.", e);
+                LogUtil.Log4netLogger.Error(MethodBase.GetCurrentMethod().DeclaringType, "Divided by 0.", e);
             }
         }
     }
