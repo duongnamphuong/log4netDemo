@@ -12,6 +12,9 @@ namespace log4netdblogger
         static void Main(string[] args)
         {
             LogUtil.Log4netLogger.Info(MethodBase.GetCurrentMethod().DeclaringType, "1");
+            LogUtil.Log4netLogger.Debug(MethodBase.GetCurrentMethod().DeclaringType, "1");
+            LogUtil.Log4netLogger.Warn(MethodBase.GetCurrentMethod().DeclaringType, "1");
+            LogUtil.Log4netLogger.Fatal(MethodBase.GetCurrentMethod().DeclaringType, "1");
             int divisor = 0, i = 1;
             try
             {
