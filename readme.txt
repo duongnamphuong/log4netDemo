@@ -5,7 +5,7 @@ References:
 	https://stackify.com/log4net-guide-dotnet-logging/
 
 Steps:
-- Create a solution with a console project, using .NET Framework 4.5.2
+- Create a solution with a library project "LogUtil", using .NET Framework 4.5.2
 - Using Package Manager Console, run: install-package log4net -version 2.0.8
 - Add a new config file: log4net.config. Open its properties and set "Copy to Output Directory" to "Copy always". Paste this content into the file (overwrite all previous content):
 	<log4net>
@@ -114,6 +114,71 @@ Steps:
 	</log4net>
 - Open AssemblyInfo.cs, then insert this at the last line:
 	[assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.config")]
+- Add file Log4netLogger.cs:
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+
+	namespace LogUtil
+	{
+	    public static class Log4netLogger
+	    {
+	        public static void Info(Type caller, object message)
+	        {
+	            var log = log4net.LogManager.GetLogger(caller);
+	            log.Info(message);
+	        }
+	        public static void Info(Type caller, object message, Exception exception)
+	        {
+	            var log = log4net.LogManager.GetLogger(caller);
+	            log.Info(message, exception);
+	        }
+	        public static void Warn(Type caller, object message)
+	        {
+	            var log = log4net.LogManager.GetLogger(caller);
+	            log.Warn(message);
+	        }
+	        public static void Warn(Type caller, object message, Exception exception)
+	        {
+	            var log = log4net.LogManager.GetLogger(caller);
+	            log.Warn(message, exception);
+	        }
+	        public static void Error(Type caller, object message)
+	        {
+	            var log = log4net.LogManager.GetLogger(caller);
+	            log.Error(message);
+	        }
+	        public static void Error(Type caller, object message, Exception exception)
+	        {
+	            var log = log4net.LogManager.GetLogger(caller);
+	            log.Error(message, exception);
+	        }
+	        public static void Debug(Type caller, object message)
+	        {
+	            var log = log4net.LogManager.GetLogger(caller);
+	            log.Debug(message);
+	        }
+	        public static void Debug(Type caller, object message, Exception exception)
+	        {
+	            var log = log4net.LogManager.GetLogger(caller);
+	            log.Debug(message, exception);
+	        }
+	        public static void Fatal(Type caller, object message)
+	        {
+	            var log = log4net.LogManager.GetLogger(caller);
+	            log.Fatal(message);
+	        }
+	        public static void Fatal(Type caller, object message, Exception exception)
+	        {
+	            var log = log4net.LogManager.GetLogger(caller);
+	            log.Fatal(message, exception);
+	        }
+	    }
+	}
+
+- Add a console project "log4netdblogger", and add "LogUtil" into its references list.
 - In App.config, add this inside <configuration>:
 	<connectionStrings>
 		<add name="Log4NetConnectionString" connectionString="Data Source=.; Persist Security Info=True; Initial Catalog=log4netdblogger;Integrated Security=True" providerName="System.Data.SqlClient" />
@@ -158,7 +223,7 @@ Steps:
 	GO
 - Of course, filegroup is supported since SQL Server 2017
 - When writing logs, you will use one of those two tables. Use [Log4NetLog] if your SQL Server is not 2017 or later version. Use [LogOldp] if you have SQL Server 2017 and want a better capability for high speed of log insertion. The name of the used table is written in log4net.config. You can find it and change as you like.
-- Program.cs:
+- Demo logging in Program.cs:
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
@@ -187,3 +252,4 @@ Steps:
 	        }
 	    }
 	}
+- Run "log4netdblogger.exe", pause the console before it closes (with Console.Readline() command, for example). After that, check for logs in console, file and in the table in database.
