@@ -24,6 +24,7 @@ namespace log4netdblogger
             {
                 LogUtil.Log4netLogger.Error(MethodBase.GetCurrentMethod().DeclaringType, "Divided by 0.", e);
             }
+            Console.ReadLine();
         }
     }
 }
