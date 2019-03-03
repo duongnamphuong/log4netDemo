@@ -58,7 +58,7 @@ Steps:
 	    <bufferSize value="1" />
 	    <connectionType value="System.Data.SqlClient.SqlConnection, System.Data, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
 	    <connectionStringName value="Log4NetConnectionString" />
-	    <commandText value="INSERT INTO dbo.LogOldp ([Date],[Host],[Thread],[Level],[Logger],[Message],[Exception]) VALUES (@log_date,@log_host,@thread,@log_level,@logger,@message,@exception)" />
+	    <commandText value="INSERT INTO dbo.LogOldp ([Date],[Host],[Thread],[Level],[Logger],[Message],[Exception],[Assembly]) VALUES (@log_date,@log_host,@thread,@log_level,@logger,@message,@exception,NULL)" />
 	    <parameter>
 	      <parameterName value="@log_date" />
 	      <dbType value="DateTime" />
@@ -189,11 +189,13 @@ Steps:
 	CREATE TABLE [dbo].[Log4NetLog](
 		[Id] [int] IDENTITY(1,1) NOT NULL,
 		[Date] [datetime] NOT NULL,
+		[Host] [nvarchar](255) NOT NULL,
 		[Thread] [nvarchar](255) NOT NULL,
 		[Level] [nvarchar](50) NOT NULL,
 		[Logger] [nvarchar](255) NOT NULL,
 		[Message] [nvarchar](max) NOT NULL,
 		[Exception] [nvarchar](max) NULL,
+		[Assembly] [nvarchar](255) NULL,
 	 CONSTRAINT [PK_Log4NetLog] PRIMARY KEY CLUSTERED
 	(
 		[Id] ASC
@@ -227,6 +229,7 @@ Steps:
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using System.Reflection;
 	using System.Text;
 	using System.Threading.Tasks;
 
@@ -249,7 +252,8 @@ Steps:
 	            {
 	                LogUtil.Log4netLogger.Error(MethodBase.GetCurrentMethod().DeclaringType, "Divided by 0.", e);
 	            }
+	            Console.ReadLine();
 	        }
 	    }
 	}
-- Run "log4netdblogger.exe", pause the console before it closes (with Console.Readline() command, for example). After that, check for logs in console, file and in the table in database.
+- Run "log4netdblogger.exe", then check for logs in console, file and in the table in database.
