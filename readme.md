@@ -65,7 +65,7 @@ I use UTC timezone for the timing of the logs and target database is an SQL Serv
     <bufferSize value="1" />
     <connectionType value="System.Data.SqlClient.SqlConnection, System.Data, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <connectionStringName value="Log4NetConnectionString" />
-    <commandText value="INSERT INTO dbo.LogOldp ([Date],[Host],[Thread],[Level],[Logger],[Message],[Exception],[Assembly]) VALUES (@log_date,@log_host,@thread,@log_level,@logger,@message,@exception,NULL)" />
+    <commandText value="INSERT INTO dbo.LogOltp ([Date],[Host],[Thread],[Level],[Logger],[Message],[Exception],[Assembly]) VALUES (@log_date,@log_host,@thread,@log_level,@logger,@message,@exception,NULL)" />
     <parameter>
       <parameterName value="@log_date" />
       <dbType value="DateTime" />
@@ -199,7 +199,7 @@ namespace LogUtil
 </connectionStrings>
 ```
 * Create log4netdblogger database in SQL Server, then add these tables:
-  * Note: **LogOldp** is a In-memory table and is only supported in SQL Server 2017 or later. It uses new technology to speed up data insertion.
+  * Note: **LogOltp** is a In-memory table and is only supported in SQL Server 2017 or later. It uses new technology to speed up data insertion.
 ```sql
 CREATE TABLE [dbo].[Log4NetLog](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -217,7 +217,7 @@ CREATE TABLE [dbo].[Log4NetLog](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-CREATE TABLE [dbo].[LogOldp] (
+CREATE TABLE [dbo].[LogOltp] (
 	[Id] [bigint] IDENTITY(1,1) NOT NULL,
 	[Date] [datetime] NOT NULL,
 	[Host] [nvarchar](255) NOT NULL,
@@ -241,7 +241,7 @@ ALTER DATABASE log4netdblogger ADD FILE (name = [log4netdblogger_dir], filename=
 GO
 ```
 (Of course, filegroup is supported since SQL Server 2017)
-* When writing logs, you will use one of those two tables. Use [Log4NetLog] if your SQL Server is not 2017 or later version. Use **LogOldp** if you have SQL Server 2017 and want a better capability for high speed of log insertion. The name of the used table is written in log4net.config. You can find it and change as you like.
+* When writing logs, you will use one of those two tables. Use [Log4NetLog] if your SQL Server is not 2017 or later version. Use **LogOltp** if you have SQL Server 2017 and want a better capability for high speed of log insertion. The name of the used table is written in log4net.config. You can find it and change as you like.
 * Demo logging in *Program.cs*:
 ```csharp
 using System;
