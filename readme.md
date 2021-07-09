@@ -12,7 +12,7 @@ I use UTC timezone for the timing of the logs and target database is an SQL Serv
 # Steps
 
 * Create a solution with a library project **LogUtil**, using .NET Framework 4.5.2
-* Using Package Manager Console, run: `install-package log4net -version 2.0.8`
+* Using Package Manager Console, run: `install-package log4net -version 2.0.10`
 * Add a new config file: **log4net.config**. Open its properties and set "Copy to Output Directory" to "Copy always". Paste this content into the file (overwrite all previous content):
 ```xml
 <log4net>
