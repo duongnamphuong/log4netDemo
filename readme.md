@@ -226,6 +226,7 @@ CREATE TABLE [dbo].[LogOltp] (
 	[Logger] [nvarchar](255) NOT NULL,
 	[Message] [nvarchar](max) NOT NULL,
 	[Exception] [nvarchar](max) NULL,
+	[Assembly] [nvarchar](255) NULL,
  PRIMARY KEY NONCLUSTERED
 (
 	[Id] ASC
